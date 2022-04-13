@@ -4,8 +4,8 @@ import MainLayout from '../../layout/MainLayout'
 const HomePage = (props) => {
     return (
         <MainLayout>
-            <div>
-                <label>This is Home Page</label>
+            <div className="text-center">
+                This is Home Page
             </div>
         </MainLayout>
     )

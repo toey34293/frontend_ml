@@ -23,9 +23,13 @@ const MainLayout = ({children}) => {
                     </Link>
                 </Header>
             </Affix>
-            <Content>{children}</Content>
+            <Content>
+                <div>
+                    {children}
+                </div>
+            </Content>
             <Affix>
-                <Footer>
+                <Footer style={{background: 'rgba(66,56,115,0.43)'}}>
                     Project Machine Learning KMUTNB
                 </Footer>
             </Affix>
