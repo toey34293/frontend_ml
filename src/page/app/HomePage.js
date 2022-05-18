@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import MainLayout from '../../layout/MainLayout'
 import { InboxOutlined } from '@ant-design/icons'
 import { Button, Image, notification, Upload } from 'antd'
+import { Axios } from '../../config/AxiosConfig'
 
 const {Dragger} = Upload
 
@@ -22,6 +23,9 @@ const HomePage = (props) => {
                     duration: 0,
                 })
                 getBase64(file)
+
+                // const {data} = await Axios.post('')
+
                 notification.destroy()
             } catch (e) {
                 //handle error
