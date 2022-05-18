@@ -38,4 +38,3 @@ Axios.interceptors.response.use(
 )
 
 export { Axios }
-
