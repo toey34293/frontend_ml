@@ -1,11 +1,9 @@
 import axios from 'axios'
 import { notification } from 'antd'
 
-const Axios = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
-})
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
-Axios.interceptors.request.use(
+axios.interceptors.request.use(
     async config => {
         return config
     },
@@ -14,7 +12,7 @@ Axios.interceptors.request.use(
     }
 )
 
-Axios.interceptors.response.use(
+axios.interceptors.response.use(
     response => {
         return response
     },
@@ -37,4 +35,4 @@ Axios.interceptors.response.use(
     }
 )
 
-export { Axios }
+export { axios }
