@@ -17,10 +17,10 @@ axios.interceptors.response.use(
         return response
     },
     error => {
-        if (error.response && error.response.status !== 404) { //recheck error.res after connect backend
+        if (error.response && error.response.status !== 404) {
             notification.error({
-                message: (error.response.data && error.response.data.detail) || 'Unknown Subject',
-                description: (error.response.data && error.response.data.detail) || 'Unknown detail',
+                message: (error.response.data && error.response.data.detail) || error.code ||'Unknown Subject',
+                description: (error.response.data && error.response.data.detail) || error.message || 'Unknown detail',
                 duration: 5
             })
         } else if (!error.response) {
@@ -30,7 +30,6 @@ axios.interceptors.response.use(
                 duration: 5
             })
         }
-        if (process.env.NODE_ENV === 'development') console.error('**interceptors error**', error.response)
         return Promise.reject(error)
     }
 )

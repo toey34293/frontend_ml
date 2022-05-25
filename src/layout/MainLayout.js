@@ -30,7 +30,7 @@ const MainLayout = ({children}) => {
             </Content>
             <Affix>
                 <Footer style={{background: 'rgba(66,56,115,0.43)'}}>
-                    Project Machine Learning KMUTNB
+                    Project Cassava Disease Detect of Machine Learning 2/2564 KMUTNB
                 </Footer>
             </Affix>
         </Layout>

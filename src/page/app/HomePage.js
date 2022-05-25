@@ -6,7 +6,7 @@ import { axios } from '../../config/AxiosConfig'
 
 const {Dragger} = Upload
 
-const imageType = ['image/jpeg']
+const imageType = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp']
 
 const HomePage = (props) => {
     const [loading, setLoading] = useState(false)
@@ -18,20 +18,21 @@ const HomePage = (props) => {
         if (file) {
             notification.info({
                 message: 'กำลังอัปโหลดภาพ',
-                description: 'การอัปโหลดไฟล์จะใช้เวลาประมาณ 5-10 นาที กรุณาอย่าปิดหรือรีโหลดหน้าเว็บ',
+                description: 'การอัปโหลดไฟล์จะใช้เวลาประมาณหนึ่ง กรุณาอย่าปิดหรือรีโหลดหน้าเว็บ',
                 placement: 'topRight',
-                duration: 5,
+                duration: 0,
             })
             try {
-                getBase64(file)
-                let blob = await fetch(file).then(r => r.blob())
                 let formData = new FormData()
-                formData.append('file', blob)
+                formData.append('image', file)
                 const {data} = await axios.post('/predict', formData)
+                getBase64(file)
                 setPredict(data.message)
             } catch (e) {
-                //handle in interceptor
+                setUploadImage(null)
+                setPredict(null)
             }
+            notification.destroy()
         }
         setLoading(false)
     }
@@ -49,7 +50,7 @@ const HomePage = (props) => {
         if (!fileType) {
             notification.warning({
                 message: 'ประเภทไฟล์ไม่ถูกต้อง',
-                description: 'ไฟล์ต้องเป็นประเภท JPEG เท่านั้น'
+                description: 'ไฟล์ต้องเป็นประเภท JPG, JPEG, PNG และ WEBP เท่านั้น'
             })
         }
         return fileType
@@ -57,7 +58,7 @@ const HomePage = (props) => {
 
     return (
         <MainLayout>
-            {!uploadImage ?
+            {!uploadImage && !predict ?
                 <div className="px-5">
                     <Dragger
                         name="file"
@@ -81,7 +82,11 @@ const HomePage = (props) => {
                 </div>
                 :
                 <div className="text-center">
-                    <div style={{fontSize:'50px'}}>Predict : {predict}</div>
+                    <div className="text-center mb-3" style={{fontSize: '30px'}}>
+                        This image most likely belongs to
+                        <b className="text-danger">{predict.full_name} ({predict.short_name}) </b>
+                        with a <b className="text-danger">{predict.percent}</b> percent confidence.
+                    </div>
                     <div className="text-center mb-3">
                         <Image src={uploadImage}/>
                     </div>
